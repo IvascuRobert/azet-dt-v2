@@ -12,8 +12,8 @@ import { User } from '../../../models/user.model';
   styleUrls: ['./navigation-main.component.scss']
 })
 export class NavigationMainComponent implements OnInit, OnDestroy {
-  public user: User;
-  private authSubscription: Subscription;
+  public user!: User;
+  private authSubscription!: Subscription;
 
   constructor(public authService: AuthService) {}
 

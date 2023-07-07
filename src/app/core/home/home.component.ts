@@ -18,19 +18,17 @@ import { Promo } from '../../models/promo.model';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject();
-  public products: Product[];
+  public products!: Product[];
   public productsFeatured: any;
-  public productsNewArrivals: Product[];
-  public productsOnSale: Product[];
-  public productsBestRated: Product[];
-  public promos: Promo[];
+  public productsNewArrivals!: Product[];
+  public productsOnSale!: Product[];
+  public productsBestRated!: Product[];
+  public promos!: Promo[];
 
   constructor(
-    private messageService: MessageService,
-    private productsCache: ProductsCacheService,
     private productService: ProductService,
     private promoService: PromoService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.productService

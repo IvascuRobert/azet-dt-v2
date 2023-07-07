@@ -4,11 +4,11 @@ export class Customer {
     public lastname: string = '',
     public address1: string = '',
     public address2: string = '',
-    public zip: number = null,
+    public zip: number | null = null,
     public city: string = '',
     public email: string = '',
     public phone: string = '',
     public company: string = '',
     public country: string = ''
-  ) {}
+  ) { }
 }

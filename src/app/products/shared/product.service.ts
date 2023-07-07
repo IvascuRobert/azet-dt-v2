@@ -1,8 +1,8 @@
 
-import {combineLatest as observableCombineLatest,  Observable ,  from as fromPromise ,  of } from 'rxjs';
+import { combineLatest as observableCombineLatest, Observable, from as fromPromise, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-import { catchError ,  tap, switchMap, map } from 'rxjs/operators';
+import { catchError, tap, switchMap, map } from 'rxjs/operators';
 
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { AuthService } from '../../account/shared/auth.service';
@@ -23,7 +23,7 @@ export class ProductService {
     public authService: AuthService,
     private uploadService: FileUploadService,
     private productRatingService: ProductRatingService
-  ) {}
+  ) { }
 
   /** Log a ProductService message with the MessageService */
   private log(message: string) {
@@ -68,7 +68,7 @@ export class ProductService {
       .pipe(catchError(this.handleError<Product[]>(`getProductsQuery`)));
   }
 
-  public findProducts(term): Observable<any> {
+  public findProducts(term: string): Observable<any> {
     return this.angularFireDatabase
       .list<Product>('products', (ref) =>
         ref
@@ -86,10 +86,10 @@ export class ProductService {
         ref.orderByChild('date').limitToLast(limitToLast)
       )
       .valueChanges()
-        .pipe(
-          map((arr) => arr.reverse()),
-          catchError(this.handleError<Product[]>(`getProductsByDate`))
-        );
+      .pipe(
+        map((arr) => arr.reverse()),
+        catchError(this.handleError<Product[]>(`getProductsByDate`))
+      );
   }
 
   public getProductsByRating(limitToLast: number): Observable<Product[]> {
@@ -112,11 +112,14 @@ export class ProductService {
               actions.map((action) => this.getProduct(action.key))
             );
           },
-          (actionsFromSource, resolvedProducts) => {
-            resolvedProducts.map((product, i) => {
-              product['imageFeaturedUrl'] = actionsFromSource[
-                i
-              ].payload.val().imageFeaturedUrl;
+          (actionsFromSource: any, resolvedProducts) => {
+            resolvedProducts.map((product, i: number) => {
+              if (product) {
+                product['imageFeaturedUrl'] = actionsFromSource[
+                  i
+                ].payload.val().imageFeaturedUrl;
+              }
+
               return product;
             });
             return resolvedProducts;

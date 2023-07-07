@@ -21,12 +21,12 @@ import { User } from '../../models/user.model';
   styleUrls: ['./review.component.scss']
 })
 export class ReviewComponent implements OnInit, OnDestroy {
-  items: CartItem[];
-  total: number;
-  customer: Customer;
-  paymentMethod: string;
+  items!: CartItem[];
+  total!: number;
+  customer!: Customer | null;
+  paymentMethod!: string;
   unsubscribe$ = new Subject();
-  user: User;
+  user!: User;
 
 
   constructor(
@@ -36,7 +36,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authService.user.subscribe(user => this.user = user);
@@ -76,7 +76,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  private submitUserOrder(order, total, userUid) {
+  private submitUserOrder(order: any, total: any, userUid: any) {
     this.orderService
       .addUserOrder(order, total, userUid)
       .pipe(takeUntil(this.unsubscribe$))
@@ -92,7 +92,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
       );
   }
 
-  private submitAnonOrder(order, total) {
+  private submitAnonOrder(order: any, total: any) {
     this.orderService
       .addAnonymousOrder(order, total)
       .pipe(takeUntil(this.unsubscribe$))

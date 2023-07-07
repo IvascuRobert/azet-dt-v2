@@ -42,7 +42,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private productService: ProductService,
     private productRatingService: ProductRatingService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.authService.user
@@ -65,12 +65,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   private getProduct(): void {
     this.productLoading = true;
 
-    const id = +this.route.snapshot.paramMap.get("id");
+    const id = this.route.snapshot.paramMap.get("id");
 
     this.productService
       .getProduct(id)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((product: Product) => {
+      .subscribe((product: Product | null) => {
         if (product) {
           this.product = product;
           this.setupProduct();
@@ -119,12 +119,16 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   }
 
   private checkCategories() {
+    if (!this.product.categories) {
+      return;
+    }
     const categories = Object.keys(this.product.categories).map(
       (category, index, inputArray) => {
         category = index < inputArray.length - 1 ? category + "," : category;
         return category;
       }
     );
+
     this.product.categories =
       categories.length >= 1 && !Array.isArray(this.product.categories)
         ? categories

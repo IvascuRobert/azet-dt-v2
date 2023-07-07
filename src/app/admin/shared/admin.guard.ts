@@ -8,11 +8,11 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from '../../account/shared/auth.service';
 
-import { take ,  map ,  tap } from 'rxjs/operators';
+import { take, map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   public canActivate(
     next: ActivatedRouteSnapshot,
@@ -20,7 +20,7 @@ export class AdminGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.user.pipe(
       take(1),
-      map((user) => (user && user.roles.admin ? true : false)),
+      map((user) => (user && user.roles && user.roles.admin ? true : false)),
       tap((authorized) => {
         if (!authorized) {
           this.router.navigate(['/register-login']);

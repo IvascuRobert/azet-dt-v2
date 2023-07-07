@@ -15,7 +15,7 @@ export class User {
   public confirmPassword?: string;
   public uid?: string;
 
-  constructor(authData) {
+  constructor(authData: any) {
     this.email = authData.email;
     this.firstName = authData.firstName ? authData.firstName : '';
     this.lastName = authData.lastName ? authData.lastName : '';

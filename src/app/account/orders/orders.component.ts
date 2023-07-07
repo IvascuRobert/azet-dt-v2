@@ -18,15 +18,15 @@ import { Order } from '../../models/order.model';
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit, OnDestroy {
-  public orders: Order[];
-  private ordersSubscription: Subscription;
+  public orders!: Order[];
+  private ordersSubscription!: Subscription;
 
-  constructor(public orderService: OrderService) {}
+  constructor(public orderService: OrderService) { }
 
   ngOnInit() {
     this.ordersSubscription = this.orderService
       .getOrders()
-      .subscribe((orders: Order[]) => {
+      .subscribe((orders: any) => {
         if (orders) {
           this.orders = orders.reverse();
         }

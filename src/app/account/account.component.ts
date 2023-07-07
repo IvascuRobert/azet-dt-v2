@@ -12,10 +12,9 @@ import { User } from '../models/user.model';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent {
-  public user: User;
+  public user!: User;
 
   constructor(
-    private authService: AuthService,
     public router: Router,
     public orderService: OrderService
   ) {}

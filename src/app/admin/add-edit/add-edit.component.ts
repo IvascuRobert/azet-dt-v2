@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Observable ,  Subscription ,  of } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 
 import { MessageService } from '../../messages/message.service';
 import { FileUploadService } from '../../products/shared/file-upload.service';
@@ -11,12 +11,6 @@ import { ProductsCacheService } from '../../products/shared/products-cache.servi
 
 import { Product } from '../../models/product.model';
 
-// we send and receive categories as {key:true},
-// but for the input field we need
-// a product with categories of type string
-export class DomainProduct extends Product {
-  categories: string;
-}
 
 @Component({
   selector: 'app-add-edit',
@@ -24,14 +18,14 @@ export class DomainProduct extends Product {
   styleUrls: ['./add-edit.component.scss']
 })
 export class AddEditComponent implements OnInit, OnDestroy {
-  private productSubscription: Subscription;
-  private formSubscription: Subscription;
-  @ViewChild('photos', { static: true }) photos;
-  public productForm: UntypedFormGroup;
-  public product: DomainProduct;
-  public mode: 'edit' | 'add';
-  public id;
-  public percentage: Observable<number>;
+  private productSubscription!: Subscription;
+  private formSubscription!: Subscription;
+  @ViewChild('photos', { static: true }) photos: any;
+  public productForm!: UntypedFormGroup;
+  public product!: Product | null;
+  public mode!: 'edit' | 'add';
+  public id: any;
+  public percentage!: Observable<number>;
 
   constructor(
     private router: Router,
@@ -40,7 +34,7 @@ export class AddEditComponent implements OnInit, OnDestroy {
     public fileUploadService: FileUploadService,
     private productsCacheService: ProductsCacheService,
     private log: MessageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.setProduct();
@@ -85,7 +79,7 @@ export class AddEditComponent implements OnInit, OnDestroy {
 
   private setProduct() {
     this.route.params.subscribe((params: Params) => {
-      this.id = +this.route.snapshot.paramMap.get('id');
+      this.id = this.route.snapshot.paramMap.get('id');
       // if we have an id, we're in edit mode
       if (this.id) {
         this.mode = 'edit';
@@ -102,16 +96,18 @@ export class AddEditComponent implements OnInit, OnDestroy {
 
   private constructProduct() {
     const product = this.constructMockProduct();
-    product.categories = this.categoriesFromObjectToString(product.categories);
-    this.syncProduct(product);
-    this.initForm();
+    if (product.categories) {
+      product.categories = this.categoriesFromObjectToString(product.categories);
+      this.syncProduct(product);
+      this.initForm();
+    }
   }
 
-  private getProduct(id): void {
+  private getProduct(id: any): void {
     this.productSubscription = this.productService
       .getProduct(id)
       .subscribe((product) => {
-        if (product) {
+        if (product && product.categories) {
           product.categories = this.categoriesFromObjectToString(
             product.categories
           );
@@ -130,7 +126,7 @@ export class AddEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  private syncProduct(product): void {
+  private syncProduct(product: any): void {
     const id = this.createId(product);
     const imageURLs = this.handleImageURLs(product);
     const reduction = this.calculateReduction(
@@ -150,6 +146,10 @@ export class AddEditComponent implements OnInit, OnDestroy {
 
   public onSubmit() {
     this.syncProduct({ ...this.product, ...this.productForm.value });
+    if (!this.product) {
+      return;
+    }
+
     const productToSubmit = this.constructProductToSubmit(this.product);
     const files: FileList = this.photos.nativeElement.files;
     if (this.mode === 'add' && files.length > 0) {
@@ -179,6 +179,9 @@ export class AddEditComponent implements OnInit, OnDestroy {
 
   private updateProduct(product: Product, files?: FileList) {
     this.productSubscription.unsubscribe();
+    if (!files) {
+      return;
+    }
     this.productService.updateProduct({ product, files }).subscribe(
       (response: Product) => {
         this.router.navigate(['/products/' + response.id]);
@@ -190,6 +193,11 @@ export class AddEditComponent implements OnInit, OnDestroy {
   public onDelete() {
     if (this.mode === 'edit') {
       this.productSubscription.unsubscribe();
+
+      if (!this.product) {
+        return;
+      }
+
       this.productService.deleteProduct(this.product).then((res) => {
         this.router.navigate(['/products']);
       });
@@ -203,7 +211,7 @@ export class AddEditComponent implements OnInit, OnDestroy {
     return new Product();
   }
 
-  private constructProductToSubmit(product: DomainProduct): Product {
+  private constructProductToSubmit(product: any): Product {
     return {
       ...product,
       categories: this.categoriesFromStringToObject(product.categories)
@@ -242,7 +250,7 @@ export class AddEditComponent implements OnInit, OnDestroy {
     }
     return categories
       .split(',')
-      .reduce((combinedCategories, currentCategory) => {
+      .reduce((combinedCategories: any, currentCategory) => {
         combinedCategories[currentCategory.trim()] = true;
         return combinedCategories;
       }, {});

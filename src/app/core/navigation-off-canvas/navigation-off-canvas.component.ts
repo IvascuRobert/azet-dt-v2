@@ -14,14 +14,14 @@ import { User } from '../../models/user.model';
   styleUrls: ['./navigation-off-canvas.component.scss']
 })
 export class NavigationOffCanvasComponent implements OnInit, OnDestroy {
-  private authSubscription: Subscription;
-  public user: User;
+  private authSubscription!: Subscription;
+  public user!: User;
 
   constructor(
     public offcanvasService: OffcanvasService,
     public authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authSubscription = this.authService.user.subscribe((user) => {

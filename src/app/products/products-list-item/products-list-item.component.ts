@@ -15,16 +15,16 @@ import { User } from '../../models/user.model';
   styleUrls: ['./products-list-item.component.scss']
 })
 export class ProductsListItemComponent implements OnInit, OnDestroy {
-  private userSubscription: Subscription;
-  @Input() public product: Product;
-  @Input() public displayMode: string;
-  public user: User;
-  public imageLoading: boolean;
+  private userSubscription!: Subscription;
+  @Input() public product!: Product;
+  @Input() public displayMode: string | null = null;
+  public user!: User;
+  public imageLoading!: boolean;
 
   constructor(
     private cartService: CartService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.imageLoading = true;

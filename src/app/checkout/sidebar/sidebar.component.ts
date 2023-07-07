@@ -8,11 +8,11 @@ import { CartService } from '../../cart/shared/cart.service';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  public cartSubtotal: number;
-  public shipping: number;
-  public orderTotal: number;
+  public cartSubtotal!: number;
+  public shipping!: number;
+  public orderTotal!: number;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService) { }
 
   ngOnInit() {
     this.cartSubtotal = this.cartService.getTotal();

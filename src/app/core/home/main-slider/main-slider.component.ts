@@ -11,9 +11,9 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class MainSliderComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject();
-  @Input() public items: any[];
-  public currentSlide: number;
-  public imagesLoaded: string[];
+  @Input() public items: any[] = [];
+  public currentSlide!: number;
+  public imagesLoaded!: string[];
 
   public options: NgxSiemaOptions = {
     selector: '.siema',

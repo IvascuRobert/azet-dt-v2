@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { debounceTime ,  distinctUntilChanged ,  filter ,  switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 import { ProductService } from '../../../products/shared/product.service';
 
@@ -18,12 +18,12 @@ import { ProductService } from '../../../products/shared/product.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  products: any[];
+  products!: any[];
   term$ = new Subject<string>();
-  @Input() showSearch: boolean;
+  @Input() showSearch!: boolean;
   @Output() onHideSearch = new EventEmitter<boolean>();
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) { }
 
   ngOnInit() {
     this.term$
@@ -42,7 +42,7 @@ export class SearchComponent implements OnInit {
     return this.productService.findProducts(term);
   }
 
-  public onSearchInput(event) {
+  public onSearchInput(event: any) {
     let term = event.target.value;
     if (term.length > 0) {
       term = term.charAt(0).toUpperCase() + term.slice(1);

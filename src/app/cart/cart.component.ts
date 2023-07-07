@@ -11,11 +11,11 @@ import { CartItem } from '../models/cart-item.model';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit, OnDestroy {
-  private cartSubscription: Subscription;
-  public items: CartItem[];
-  public total: number;
+  private cartSubscription!: Subscription;
+  public items!: CartItem[];
+  public total!: number;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService) { }
 
   ngOnInit() {
     this.items = this.cartService.getItems();
@@ -28,13 +28,13 @@ export class CartComponent implements OnInit, OnDestroy {
     );
   }
 
-  public onClearCart(event) {
+  public onClearCart(event: any) {
     event.preventDefault();
     event.stopPropagation();
     this.cartService.clearCart();
   }
 
-  public onRemoveItem(event, item: CartItem) {
+  public onRemoveItem(event: any, item: CartItem) {
     event.preventDefault();
     event.stopPropagation();
     this.cartService.removeItem(item);

@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild, OnChanges } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
-  UntypedFormGroup,
-  ReactiveFormsModule,
   UntypedFormControl,
-  Validators,
+  UntypedFormGroup,
+  Validators
 } from "@angular/forms";
-import { Router, ActivatedRoute, Params } from "@angular/router";
+import { Router } from "@angular/router";
 import { MessageService } from "../../messages/message.service";
 import { AuthService } from "../shared/auth.service";
 
@@ -23,7 +22,7 @@ export class RegisterLoginComponent implements OnInit {
     private authenticationService: AuthService,
     private router: Router,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initLoginForm();
@@ -57,8 +56,8 @@ export class RegisterLoginComponent implements OnInit {
       this.registerForm.value.confirmPassword
     ) {
       this.registerErrors = "Passwords don't match!";
-      this.registerForm.controls.password.setErrors({ password: true });
-      this.registerForm.controls.confirmPassword.setErrors({
+      this.registerForm.controls['password'].setErrors({ password: true });
+      this.registerForm.controls['confirmPassword'].setErrors({
         confirmPassword: true,
       });
     } else {

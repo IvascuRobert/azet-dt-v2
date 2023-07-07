@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 
-import { Observable ,  from as fromPromise ,  of } from 'rxjs';
+import { Observable, from as fromPromise, of } from 'rxjs';
 
 import { AuthService } from '../../account/shared/auth.service';
 import { MessageService } from '../../messages/message.service';
-import { FileUploadService } from './file-upload.service';
 
-import { ProductsUrl } from './productsUrl';
 import { Product } from '../../models/product.model';
 import { User } from '../../models/user.model';
+import { ProductsUrl } from './productsUrl';
 
 @Injectable()
 export class ProductRatingService {
   private productsUrl = ProductsUrl.productsUrl;
-  private user: User;
+  private user!: User;
 
   constructor(
     private messageService: MessageService,
@@ -58,12 +57,16 @@ export class ProductRatingService {
         })
     );
   }
-// pure helper functions start here
+  // pure helper functions start here
   private constructRating(product: Product, rating: number) {
     // construct container for update content
-    const updates = {};
+    const updates: any = {};
 
     // Add user rating to local version of ratings
+    if (!this.user.uid) {
+      return;
+    }
+
     if (product.ratings) {
       product.ratings[this.user.uid] = rating;
     } else {
@@ -83,7 +86,7 @@ export class ProductRatingService {
     // Calculate and add new overall rating
     const currentRating =
       <number>Object.values(product.ratings).reduce(
-        (a: number, b: number) => a + b,
+        (a: any, b: any) => a + b,
         0
       ) / Object.values(product.ratings).length;
 

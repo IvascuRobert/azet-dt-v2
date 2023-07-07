@@ -14,15 +14,15 @@ import { User } from '../../models/user.model';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  private authSubscription: Subscription;
-  public user: User;
-  public showSearch;
+  private authSubscription!: Subscription;
+  public user!: User;
+  public showSearch!: any;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private offcanvasService: OffcanvasService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authSubscription = this.authService.user.subscribe((user) => {

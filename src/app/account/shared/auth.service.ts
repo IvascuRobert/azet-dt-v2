@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 import firebase from 'firebase/compat/app';
 
-import { Observable ,  of } from 'rxjs';
-import { take ,  takeUntil ,  switchMap, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import { MessageService } from '../../messages/message.service';
-import { User, Roles } from '../../models/user.model';
+import { User } from '../../models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +24,7 @@ export class AuthService {
           if (auth) {
             return this.db.object('users/' + auth.uid).valueChanges()
               .pipe(
-                map((user: User) => {
+                map((user: any) => {
                   return {
                     ...user,
                     uid: auth.uid
@@ -86,28 +86,28 @@ export class AuthService {
 
   public updatePassword(password: string) {
     return this.afAuth.currentUser
-    .then(user => user.updatePassword(password))
+      .then(user => user?.updatePassword(password))
       .then(() => {
         this.messageService.add('Password has been updated!');
       })
-      .catch(function(error) {
+      .catch(function (error) {
         throw error;
       });
   }
 
   public updateEmail(email: string) {
     return this.afAuth.currentUser
-    .then(user => user.updateEmail(email))
+      .then(user => user?.updateEmail(email))
       .then(() => {
         this.updateExistingUser({ email: email });
         this.messageService.add('User email have been updated!');
       })
-      .catch(function(error) {
+      .catch(function (error) {
         throw error;
       });
   }
 
-  private updateNewUser(authData) {
+  private updateNewUser(authData: any) {
     const userData = new User(authData);
     const ref = this.db.object('users/' + authData.uid);
     ref
@@ -122,17 +122,17 @@ export class AuthService {
       });
   }
 
-  private updateExistingUser(userData) {
-     this.afAuth.currentUser.then(user => {
-      const ref = this.db.object('users/' + user.uid);
+  private updateExistingUser(userData: any) {
+    this.afAuth.currentUser.then(user => {
+      const ref = this.db.object('users/' + user?.uid);
       ref
-      .valueChanges()
-      .pipe(
-        take(1)
-      )
-      .subscribe((user) => {
-        ref.update(userData);
-      });
+        .valueChanges()
+        .pipe(
+          take(1)
+        )
+        .subscribe((user) => {
+          ref.update(userData);
+        });
     });
 
   }

@@ -10,9 +10,9 @@ import { CheckoutService } from './shared/checkout.service';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
-  checkoutSubscription: Subscription;
-  steps: string[];
-  activeStep: number;
+  checkoutSubscription!: Subscription;
+  steps!: string[];
+  activeStep!: number;
 
   constructor(private checkoutService: CheckoutService) {}
 

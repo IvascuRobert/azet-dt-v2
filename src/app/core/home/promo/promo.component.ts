@@ -7,5 +7,5 @@ import { Promo } from '../../../models/promo.model';
   styleUrls: ['./promo.component.scss']
 })
 export class PromoComponent {
-  @Input() public promo: Promo;
+  @Input() public promo!: Promo;
 }

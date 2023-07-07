@@ -5,10 +5,9 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../../account/shared/auth.service';
 import { PagerService } from '../../pager/pager.service';
-import { ProductsCacheService } from '../shared/products-cache.service';
 import { ProductService } from '../shared/product.service';
-import { UiService } from '../shared/ui.service';
 import { SortPipe } from '../shared/sort.pipe';
+import { UiService } from '../shared/ui.service';
 
 import { Product } from '../../models/product.model';
 import { User } from '../../models/user.model';
@@ -20,21 +19,20 @@ import { User } from '../../models/user.model';
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject();
-  products: Product[];
-  productsPaged: Product[];
+  products!: Product[];
+  productsPaged!: Product[];
   pager: any = {};
-  user: User;
-  productsLoading: boolean;
-  currentPagingPage: number;
+  user!: User;
+  productsLoading!: boolean;
+  currentPagingPage!: number;
 
   constructor(
     private productService: ProductService,
-    private productsCacheService: ProductsCacheService,
     private pagerService: PagerService,
     private sortPipe: SortPipe,
     private authService: AuthService,
     public uiService: UiService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authService.user

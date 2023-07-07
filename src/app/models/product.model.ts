@@ -1,5 +1,5 @@
 export class Product {
-  public imageFeaturedUrl?;
+  public imageFeaturedUrl?: any;
 
   constructor(
     public id: number = 1,
@@ -11,9 +11,9 @@ export class Product {
     public reduction: number = 0,
     public imageURLs: string[] = [],
     public imageRefs: string[] = [],
-    public categories: {} = {},
+    public categories: {} | null = {},
     public ratings: any = {},
     public currentRating: number = 0,
     public sale: boolean = false
-  ) {}
+  ) { }
 }

@@ -9,8 +9,8 @@ import { Customer } from '../../models/customer.model';
   styleUrls: ['./shipping.component.scss']
 })
 export class ShippingComponent implements OnInit {
-  public formShipping: UntypedFormGroup;
-  public shippingMethods: {method: string, time: string, fee: number, value: string}[];
+  public formShipping!: UntypedFormGroup;
+  public shippingMethods!: { method: string, time: string, fee: number, value: string }[];
 
   constructor(private checkoutService: CheckoutService) { }
 
@@ -39,7 +39,7 @@ export class ShippingComponent implements OnInit {
   }
 
   public onContinue() {
-    this.checkoutService.setShippingMethod(this.formShipping.controls.shippingMethod.value);
+    this.checkoutService.setShippingMethod(this.formShipping.controls['shippingMethod'].value);
     this.checkoutService.nextStep();
   }
 

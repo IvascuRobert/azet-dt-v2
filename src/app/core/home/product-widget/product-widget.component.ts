@@ -8,6 +8,6 @@ import { Product } from '../../../models/product.model';
   styleUrls: ['./product-widget.component.scss']
 })
 export class ProductWidgetComponent {
-  @Input() public products: Product[];
-  @Input() public widgetTitle: string;
+  @Input() public products!: Product[];
+  @Input() public widgetTitle!: string;
 }

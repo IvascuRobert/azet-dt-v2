@@ -4,38 +4,38 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class FileUploadService {
-  public task$: AngularFireUploadTask;
+  public task$!: AngularFireUploadTask;
 
   // Progress monitoring
-  public percentage$: Observable<number>;
+  public percentage$!: Observable<number | undefined>;
 
-  public snapshot: Observable<any>;
+  public snapshot!: Observable<any>;
 
   // Download URL
-  public downloadURL: Observable<string>;
+  public downloadURL!: Observable<string>;
 
-  constructor(public storage: AngularFireStorage) {}
+  constructor(public storage: AngularFireStorage) { }
 
-  public startUpload(data) {
-      // The File object
-      const file = data.files.item(0);
+  public startUpload(data: any) {
+    // The File object
+    const file = data.files.item(0);
 
-      // Client-side validation example
-      if (file.type.split('/')[0] !== 'image') {
-        console.error('unsupported file type :( ');
-        throw new Error('upload failed, unsupported file type');
-      }
+    // Client-side validation example
+    if (file.type.split('/')[0] !== 'image') {
+      console.error('unsupported file type :( ');
+      throw new Error('upload failed, unsupported file type');
+    }
 
-      // The storage path
-      const path = `product-images/${new Date().getTime()}_${file}`;
+    // The storage path
+    const path = `product-images/${new Date().getTime()}_${file}`;
 
-      // The main task
-      this.task$ = this.storage.upload(path, file);
+    // The main task
+    this.task$ = this.storage.upload(path, file);
 
-      // the percentage
-      this.percentage$ = this.task$.percentageChanges();
+    // the percentage
+    this.percentage$ = this.task$.percentageChanges();
 
-      return this.task$;
+    return this.task$;
   }
 
   public deleteFile(files: string[]) {
@@ -44,10 +44,12 @@ export class FileUploadService {
         return this.storage.ref(filePath).delete();
       });
     }
+
+    return [];
   }
 
   // Determines if the upload task is active
-  public isActive(snapshot) {
+  public isActive(snapshot: any) {
     return (
       snapshot.state === 'running' &&
       snapshot.bytesTransferred < snapshot.totalBytes

@@ -9,17 +9,17 @@
   </div>
   <div class="col-md-6"></div>
   <div class="col-md-6">
-    <div class="form-group" [ngClass]="{'has-danger': formProfile.get('firstName').invalid && formProfile.get('firstName').touched}">
+    <div class="form-group" [ngClass]="{'has-danger': formProfile.get('firstName')?.invalid && formProfile.get('firstName')?.touched}">
       <label for="account-fn">First Name</label>
       <input class="form-control" type="text" id="account-fn" formControlName="firstName">
-      <div class="form-control-feedback" *ngIf="formProfile.get('firstName').invalid && formProfile.get('firstName').touched">Please enter your firstname!</div>
+      <div class="form-control-feedback" *ngIf="formProfile.get('firstName')?.invalid && formProfile.get('firstName')?.touched">Please enter your firstname!</div>
     </div>
   </div>
   <div class="col-md-6">
-    <div class="form-group" [ngClass]="{'has-danger': formProfile.get('lastName').invalid && formProfile.get('lastName').touched}">
+    <div class="form-group" [ngClass]="{'has-danger': formProfile.get('lastName')?.invalid && formProfile.get('lastName')?.touched}">
       <label for="account-ln">Last Name</label>
       <input class="form-control" type="text" id="account-ln" formControlName="lastName">
-      <div class="form-control-feedback" *ngIf="formProfile.get('lastName').invalid && formProfile.get('lastName').touched">Please enter your lastname!</div>
+      <div class="form-control-feedback" *ngIf="formProfile.get('lastName')?.invalid && formProfile.get('lastName')?.touched">Please enter your lastname!</div>
     </div>
   </div>
   <div class="col-md-6">

@@ -15,7 +15,7 @@ export class CheckoutService {
     this.activeStep = 0;
   }
 
-  public gotoStep(number) {
+  public gotoStep(number: number) {
     this.activeStep = number;
     this.stepChanged.emit(this.activeStep);
   }

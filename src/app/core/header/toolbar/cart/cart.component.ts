@@ -12,11 +12,11 @@ import { CartItem } from '../../../../models/cart-item.model';
   styleUrls: ['./cart.component.scss']
 })
 export class ToolbarCartComponent implements OnInit, OnDestroy {
-  public items: CartItem[];
-  public total: number;
-  private cartSubscription: Subscription;
+  public items!: CartItem[];
+  public total!: number;
+  private cartSubscription!: Subscription;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService) { }
 
   ngOnInit() {
     this.items = this.cartService.getItems();
@@ -29,7 +29,7 @@ export class ToolbarCartComponent implements OnInit, OnDestroy {
     );
   }
 
-  public onRemoveItem(event, item: CartItem) {
+  public onRemoveItem(event: any, item: CartItem) {
     event.stopPropagation();
     this.cartService.removeItem(item);
   }
